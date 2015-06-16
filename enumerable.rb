@@ -7,133 +7,133 @@ module Enumerable
   
   def my_each
     return self unless block_given?
-	for i in self
-	  yield i
-	end
+    for i in self
+      yield i
+    end
   end
   
   
   def my_each_with_index
     return self unless block_given?
-	for i in 0..(self.length-1)
-	  yield i if block_given?
-	  end
-	end
-	
+    for i in 0..(self.length-1)
+      yield i if block_given?
+      end
+    end
+    
   
   #Create #my_select in the same way, though you may use #my_each in your definition (but not #each)
   def my_select
-	return self unless block_given?
-	ans_array=Array.new
-	self.my_each do |a||
-	  if yield a
-		ans_array.push(a)
-		end
-	  end
-	return ans_array
-	end
-	
-	
+    return self unless block_given?
+    ans_array=Array.new
+    self.my_each do |a||
+      if yield a
+        ans_array.push(a)
+        end
+      end
+    return ans_array
+    end
+    
+    
   def my_all
-	self.my_each do |a|
-	  return false unless yield a
-	  end
+    self.my_each do |a|
+      return false unless yield a
+      end
     true
-  	end
-	
-	
+    end
+    
+    
   def my_any
-	self.my_each do |a|
-	  return true if yield a 
-	  end
+    self.my_each do |a|
+      return true if yield a 
+      end
     false
     end
-	
-	
-	
+    
+    
+    
   def my_none
-	self.my_each do |a|
-	  return false if yield a
-	  end
+    self.my_each do |a|
+      return false if yield a
+      end
     true
-	end
-	  
-	  
+    end
+      
+      
   def my_count(arg=nil)
-	count=0
-	if arg==nil && block_given? == false
-      return self.length	  
-	end
-	self.my_each do |a|
-	  if block_given?
-	    count+=1 if yield a
-	  elsif a==arg
-		count+=1
-	    end
-	  end
-	return count
-	end
-	    
-	  
+    count=0
+    if arg==nil && block_given? == false
+      return self.length      
+    end
+    self.my_each do |a|
+      if block_given?
+        count+=1 if yield a
+      elsif a==arg
+        count+=1
+        end
+      end
+    return count
+    end
+        
+      
   def my_map
     unless block_given? 
-	  return self
+      return self
       end
-	ans=Array.new
-	self.my_each do |a|
-	  if yield a
-	    ans.push(a)
-		end
-	  end
-	return ans
+    ans=Array.new
+    self.my_each do |a|
+      if yield a
+        ans.push(a)
+        end
+      end
+    return ans
     end
-	
-	  
+    
+      
   def my_inject(accumulator=nil)
-	if accumulator.nil?
-	  accumulator =  self.first
+    if accumulator.nil?
+      accumulator =  self.first
       end
-	self.my_each do |a|
-	  accumulator = yield(a,accumulator)
-	  end
-	return accumulator
-	end	
-	
-	
+    self.my_each do |a|
+      accumulator = yield(a,accumulator)
+      end
+    return accumulator
+    end 
+    
+    
   #Modify your #my_map method to take a proc instead.
   def my_map1(procedure=nil)
     unless procedure
-	  return self
-	  end
-	ans=Array.new
-	self.my_each do |a|
-	  if procedure.call(a)
-	    ans.push(a)
-	    end
-	  end
-	return ans
-	end
+      return self
+      end
+    ans=Array.new
+    self.my_each do |a|
+      if procedure.call(a)
+        ans.push(a)
+        end
+      end
+    return ans
+    end
     
-  	
-	
-	
+    
+    
+    
   #Modify your #my_map method to take either a proc or a block, executing the block only if both are supplied (in which case it would execute both the block AND the proc
   def my_map2(procedure = nil)
-	ans=Array.new
-	if procedure && block_given?  #block and procedure together
-	  self.my_each do |a|
-	    ans.push(yield(procedure.call(a)))
-	    end
-	elsif procedure  # just a procedure no block supplied
-	  self.my_each do |a|
-	    ans.push(procedure.call(a))
-		end
-	else	    
-	  return self
+    ans=Array.new
+    if procedure && block_given?  #block and procedure together
+      self.my_each do |a|
+        ans.push(yield(procedure.call(a)))
+        end
+    elsif procedure  # just a procedure no block supplied
+      self.my_each do |a|
+        ans.push(procedure.call(a))
+        end
+    else        
+      return self
       end
-	return ans
-	end
-	
+    return ans
+    end
+    
 end
 
 
@@ -142,4 +142,8 @@ end
 def multiply_els(list)
   accumulator = list.my_inject{|a,accumulator| accumulator * a}
 end
+
+
+
+
 
